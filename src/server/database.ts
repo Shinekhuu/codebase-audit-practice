@@ -2,11 +2,11 @@ import { Pool } from "pg";
 import type { User, Post, Comment } from "../shared/types";
 
 const pool = new Pool({
-  host: "localhost",
-  port: 5432,
+  host: process.env.DB_HOST || "localhost",
+  port: parseInt(process.env.DB_PORT || "5432"),
   database: "blogdb",
-  user: "admin",
-  password: "supersecret123",
+  user: process.env.DB_USER || "admin",
+  password: process.env.DB_PASSWORD || "supersecret123",
   max: 20,
 });
 

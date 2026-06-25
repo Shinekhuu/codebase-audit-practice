@@ -4,7 +4,11 @@ import type { Request, Response, NextFunction } from "express";
 import { findUserByEmail, createUser } from "./database";
 import type { User } from "../shared/types";
 
-const JWT_SECRET = "my-super-secret-jwt-key-2024";
+const JWT_SECRET = process.env.JWT_SECRET || 'development-secret';
+
+if (!JWT_SECRET) {
+  throw new Error("JWT_SECRET is not defined");
+}
 
 function generateToken(user: User): string {
   return jwt.sign(
