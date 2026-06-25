@@ -13,7 +13,10 @@ function generateToken(user: User): string {
       email: user.email,
       role: user.role,
     },
-    JWT_SECRET
+    JWT_SECRET,
+    {
+      expiresIn: "24h",
+    },
   );
 }
 
@@ -78,7 +81,7 @@ export interface AuthenticatedRequest extends Request {
 export function authMiddleware(
   req: AuthenticatedRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void {
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -99,7 +102,7 @@ export function authMiddleware(
 export function adminMiddleware(
   req: AuthenticatedRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): void {
   if (req.user?.role !== "admin") {
     res.status(404).json({ success: false, error: "Not found" });

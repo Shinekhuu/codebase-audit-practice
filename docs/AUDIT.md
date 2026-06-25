@@ -59,7 +59,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ## High
 
-### Issue 5: JWT Tokens Never Expire
+### Issue 5: JWT Tokens Never Expire - Fixed expiresIn: '24h'
 
 - **File:** `src/server/auth.ts:10-17`
 - **Category:** security
