@@ -22,7 +22,7 @@ export async function findUserByEmail(email: string): Promise<User | null> {
 }
 
 export async function findUserById(id: number): Promise<User | null> {
-  const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+  const result = await pool.query("SELECT * FROM users WHERE id = $1 limit 1", [id]);
   return result.rows[0] || null;
 }
 

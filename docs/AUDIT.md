@@ -9,7 +9,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ## Critical
 
-### Issue 1: SQL Injection in `findUserByEmail`
+### Issue 1: SQL Injection in `findUserByEmail` - Fixed
 
 - **File:** `src/server/database.ts:18`
 - **Category:** security
