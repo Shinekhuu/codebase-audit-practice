@@ -33,7 +33,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ---
 
-### Issue 3: `GET /api/users` is Completely Unprotected and Returns Password Hashes
+### Issue 3: `GET /api/users` is Completely Unprotected and Returns Password Hashes - Fixed
 
 - **File:** `src/server/routes.ts:196-204`
 - **Category:** security
@@ -45,7 +45,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ---
 
-### Issue 4: Plaintext Password Written to Application Logs
+### Issue 4: Plaintext Password Written to Application Logs - Fixed but remoted all logs
 
 - **File:** `src/server/auth.ts:37`
 - **Category:** security

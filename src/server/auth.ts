@@ -34,8 +34,6 @@ export async function login(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  console.log(`User logged in: ${user.email}, password: ${password}`);
-
   const token = generateToken(user);
 
   res.json({
