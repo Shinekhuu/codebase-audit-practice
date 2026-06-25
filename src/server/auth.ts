@@ -4,7 +4,7 @@ import type { Request, Response, NextFunction } from "express";
 import { findUserByEmail, createUser } from "./database";
 import type { User } from "../shared/types";
 
-const JWT_SECRET = process.env.JWT_SECRET || 'development-secret';
+const JWT_SECRET = process.env.JWT_SECRET || "development-secret";
 
 if (!JWT_SECRET) {
   throw new Error("JWT_SECRET is not defined");
@@ -44,10 +44,12 @@ export async function login(req: Request, res: Response): Promise<void> {
 
   const token = generateToken(user);
 
+  const { password: _, ...safeUser } = user;
+
   res.json({
     success: true,
     data: {
-      user,
+      user: safeUser,
       token,
     },
   });
@@ -62,9 +64,11 @@ export async function register(req: Request, res: Response): Promise<void> {
     const user = await createUser(email, hashedPassword, name);
 
     const token = generateToken(user);
+    const { password: _, ...safeUser } = user;
+    
     res.status(201).json({
       success: true,
-      data: { user, token },
+      data: { user: safeUser, token },
     });
   } catch (error: any) {
     res.status(500).json({

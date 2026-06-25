@@ -107,7 +107,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ---
 
-### Issue 9: Password Hash Included in Login and Register API Responses
+### Issue 9: Password Hash Included in Login and Register API Responses - Fixed
 
 - **File:** `src/server/auth.ts:41-47`, `src/server/auth.ts:59-61`
 - **Category:** security
