@@ -21,7 +21,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ---
 
-### Issue 2: SQL Injection in `searchPosts`
+### Issue 2: SQL Injection in `searchPosts` - Fixed
 
 - **File:** `src/server/database.ts:142`
 - **Category:** security

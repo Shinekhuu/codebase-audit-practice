@@ -57,11 +57,14 @@ router.get("/posts", async (req: AuthenticatedRequest, res: Response) => {
   }
 });
 
-router.get("/posts/search", async (req: AuthenticatedRequest, res: Response) => {
-  const { q } = req.query;
-  const results = await searchPosts(q as string);
-  res.json({ success: true, data: results });
-});
+router.get(
+  "/posts/search",
+  async (req: AuthenticatedRequest, res: Response) => {
+    const { q } = req.query;
+    const results = await searchPosts(q as string);
+    res.json({ success: true, data: results });
+  },
+);
 
 router.get(
   "/posts/analytics",
@@ -72,9 +75,11 @@ router.get(
       const data = await getPostsWithCommentCounts();
       res.json({ success: true, data });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Failed to fetch analytics" });
+      res
+        .status(500)
+        .json({ success: false, error: "Failed to fetch analytics" });
     }
-  }
+  },
 );
 
 router.get("/posts/:id", async (req: AuthenticatedRequest, res: Response) => {
@@ -106,7 +111,7 @@ router.post(
     } catch (error) {
       res.status(500).json({ success: false, error: "Failed to create post" });
     }
-  }
+  },
 );
 
 router.put(
@@ -119,7 +124,7 @@ router.put(
         parseInt(req.params.id),
         title,
         content,
-        status
+        status,
       );
 
       if (!post) {
@@ -131,7 +136,7 @@ router.put(
     } catch (error) {
       res.status(500).json({ success: false, error: "Failed to update post" });
     }
-  }
+  },
 );
 
 router.delete(
@@ -148,7 +153,7 @@ router.delete(
     } catch (error) {
       res.status(500).json({ success: false, error: "Failed to delete post" });
     }
-  }
+  },
 );
 
 // ============================================
@@ -166,7 +171,7 @@ router.get(
         .status(500)
         .json({ success: false, error: "Failed to fetch comments" });
     }
-  }
+  },
 );
 
 router.post(
@@ -178,7 +183,7 @@ router.post(
       const comment = await createComment(
         parseInt(req.params.id),
         req.user!.userId,
-        body
+        body,
       );
       res.status(201).json({ success: true, data: comment });
     } catch (error) {
@@ -186,21 +191,28 @@ router.post(
         .status(500)
         .json({ success: false, error: "Failed to create comment" });
     }
-  }
+  },
 );
 
 // ============================================
 // User Routes
 // ============================================
 
-router.get("/users", async (req: AuthenticatedRequest, res: Response) => {
-  try {
-    const { pool } = await import("./database");
-    const result = await pool.query("SELECT * FROM users ORDER BY created_at DESC");
-    res.json({ success: true, data: result.rows });
-  } catch (error) {
-    res.status(500).json({ success: false, error: "Failed to fetch users" });
-  }
-});
+router.get(
+  "/users",
+  authMiddleware,
+  adminMiddleware,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const { pool } = await import("./database");
+      const result = await pool.query(
+        "SELECT id, email, name, role, created_at FROM users ORDER BY created_at DESC LIMIT 20",
+      );
+      res.json({ success: true, data: result.rows });
+    } catch (error) {
+      res.status(500).json({ success: false, error: "Failed to fetch users" });
+    }
+  },
+);
 
 export default router;
