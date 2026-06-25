@@ -56,7 +56,7 @@ export async function login(req: Request, res: Response): Promise<void> {
 export async function register(req: Request, res: Response): Promise<void> {
   const { email, password, name } = req.body;
 
-  const hashedPassword = await bcrypt.hash(password, 1);
+  const hashedPassword = await bcrypt.hash(password, 12);
 
   try {
     const user = await createUser(email, hashedPassword, name);

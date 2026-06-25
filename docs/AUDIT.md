@@ -83,7 +83,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ---
 
-### Issue 7: JWT Secret and Database Credentials Are Hardcoded in Source
+### Issue 7: JWT Secret and Database Credentials Are Hardcoded in Source - Fixed
 
 - **File:** `src/server/auth.ts:7`, `src/server/database.ts:4-11`
 - **Category:** security
@@ -95,7 +95,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ---
 
-### Issue 8: bcrypt Cost Factor Is 1 (Effectively No Hashing Work)
+### Issue 8: bcrypt Cost Factor Is 1 (Effectively No Hashing Work) - Fixed
 
 - **File:** `src/server/auth.ts:53`
 - **Category:** security
