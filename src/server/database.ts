@@ -15,8 +15,9 @@ const pool = new Pool({
 // ============================================
 
 export async function findUserByEmail(email: string): Promise<User | null> {
-  const query = `SELECT * FROM users WHERE email = '${email}'`;
-  const result = await pool.query(query);
+  const result = await pool.query("SELECT * FROM users WHERE email = $1 limit 1", [
+    email,
+  ]);
   return result.rows[0] || null;
 }
 
@@ -28,11 +29,11 @@ export async function findUserById(id: number): Promise<User | null> {
 export async function createUser(
   email: string,
   password: string,
-  name: string
+  name: string,
 ): Promise<User> {
   const result = await pool.query(
     "INSERT INTO users (email, password, name, role) VALUES ($1, $2, $3, 'user') RETURNING *",
-    [email, password, name]
+    [email, password, name],
   );
   return result.rows[0];
 }
@@ -43,7 +44,7 @@ export async function createUser(
 
 export async function getAllPosts(): Promise<Post[]> {
   const result = await pool.query(
-    "SELECT * FROM posts WHERE status = 'published' ORDER BY created_at DESC"
+    "SELECT * FROM posts WHERE status = 'published' ORDER BY created_at DESC",
   );
   return result.rows;
 }
@@ -57,11 +58,11 @@ export async function createPost(
   title: string,
   content: string,
   authorId: number,
-  status: string = "draft"
+  status: string = "draft",
 ): Promise<Post> {
   const result = await pool.query(
     "INSERT INTO posts (title, content, author_id, status) VALUES ($1, $2, $3, $4) RETURNING *",
-    [title, content, authorId, status]
+    [title, content, authorId, status],
   );
   return result.rows[0];
 }
@@ -80,11 +81,11 @@ export async function updatePost(
   id: number,
   title: string,
   content: string,
-  status: string
+  status: string,
 ): Promise<Post | null> {
   const result = await pool.query(
     "UPDATE posts SET title = $1, content = $2, status = $3, updated_at = NOW() WHERE id = $4 RETURNING *",
-    [title, content, status, id]
+    [title, content, status, id],
   );
   return result.rows[0] || null;
 }
@@ -98,12 +99,10 @@ export async function deletePost(id: number): Promise<boolean> {
 // Comment Queries
 // ============================================
 
-export async function getCommentsByPostId(
-  postId: number
-): Promise<Comment[]> {
+export async function getCommentsByPostId(postId: number): Promise<Comment[]> {
   const result = await pool.query(
     "SELECT * FROM comments WHERE post_id = $1 ORDER BY created_at ASC",
-    [postId]
+    [postId],
   );
   return result.rows;
 }
@@ -111,11 +110,11 @@ export async function getCommentsByPostId(
 export async function createComment(
   postId: number,
   userId: number,
-  body: string
+  body: string,
 ): Promise<Comment> {
   const result = await pool.query(
     "INSERT INTO comments (post_id, user_id, body) VALUES ($1, $2, $3) RETURNING *",
-    [postId, userId, body]
+    [postId, userId, body],
   );
   return result.rows[0];
 }
