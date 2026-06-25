@@ -71,7 +71,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ---
 
-### Issue 6: JWT Verification Has No Algorithm Restriction (`alg: none` Attack)
+### Issue 6: JWT Verification Has No Algorithm Restriction (`alg: none` Attack) - Fixed
 
 - **File:** `src/server/auth.ts:93`
 - **Category:** security

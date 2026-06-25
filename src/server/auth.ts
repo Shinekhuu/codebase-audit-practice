@@ -15,6 +15,7 @@ function generateToken(user: User): string {
     },
     JWT_SECRET,
     {
+      algorithm: "HS256",
       expiresIn: "24h",
     },
   );
@@ -91,7 +92,9 @@ export function authMiddleware(
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as any;
+    const decoded = jwt.verify(token, JWT_SECRET, {
+      algorithms: ["HS256"],
+    }) as any;
     req.user = decoded;
     next();
   } catch (error) {
