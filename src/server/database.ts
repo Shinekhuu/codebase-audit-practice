@@ -15,14 +15,17 @@ const pool = new Pool({
 // ============================================
 
 export async function findUserByEmail(email: string): Promise<User | null> {
-  const result = await pool.query("SELECT * FROM users WHERE email = $1 limit 1", [
-    email,
-  ]);
+  const result = await pool.query(
+    "SELECT * FROM users WHERE email = $1 limit 1",
+    [email],
+  );
   return result.rows[0] || null;
 }
 
 export async function findUserById(id: number): Promise<User | null> {
-  const result = await pool.query("SELECT * FROM users WHERE id = $1 limit 1", [id]);
+  const result = await pool.query("SELECT * FROM users WHERE id = $1 limit 1", [
+    id,
+  ]);
   return result.rows[0] || null;
 }
 
@@ -138,8 +141,10 @@ export async function getPostsWithCommentCounts(): Promise<
 }
 
 export async function searchPosts(searchTerm: string): Promise<Post[]> {
-  const query = `SELECT * FROM posts WHERE title LIKE '%${searchTerm}%' OR content LIKE '%${searchTerm}%'`;
-  const result = await pool.query(query);
+  const result = await pool.query(
+    "SELECT * FROM posts WHERE title LIKE $1 OR content LIKE $2 LIMIT 20",
+    [`%${searchTerm}%`, `%${searchTerm}%`],
+  );
   return result.rows;
 }
 
