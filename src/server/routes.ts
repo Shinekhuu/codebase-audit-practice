@@ -20,7 +20,7 @@ import {
   type AuthenticatedRequest,
 } from "./auth";
 
-const router = Router();
+const router: Router = Router();
 
 // ============================================
 // Auth Routes
@@ -103,6 +103,7 @@ router.get("/posts/:id", async (req: AuthenticatedRequest, res: Response) => {
 router.post(
   "/posts",
   authMiddleware,
+  adminMiddleware,
   async (req: AuthenticatedRequest, res: Response) => {
     try {
       const { title, content, status } = req.body;
@@ -117,6 +118,7 @@ router.post(
 router.put(
   "/posts/:id",
   authMiddleware,
+  adminMiddleware,
   async (req: AuthenticatedRequest, res: Response) => {
     try {
       const { title, content, status } = req.body;
@@ -142,6 +144,7 @@ router.put(
 router.delete(
   "/posts/:id",
   authMiddleware,
+  adminMiddleware,
   async (req: AuthenticatedRequest, res: Response) => {
     try {
       const deleted = await deletePost(parseInt(req.params.id));

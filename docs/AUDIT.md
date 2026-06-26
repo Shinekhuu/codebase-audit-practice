@@ -119,7 +119,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ---
 
-### Issue 10: Internal Stack Trace Leaked to Client on Registration Error
+### Issue 10: Internal Stack Trace Leaked to Client on Registration Error - Fixed
 
 - **File:** `src/server/auth.ts:64-68`
 - **Category:** security
@@ -131,7 +131,7 @@ Issues are ranked critical → high → medium → low within each tier.
 
 ---
 
-### Issue 11: No Post Ownership Check — Any Authenticated User Can Edit or Delete Any Post
+### Issue 11: No Post Ownership Check — Any Authenticated User Can Edit or Delete Any Post - Fixed
 
 - **File:** `src/server/routes.ts:112-135`, `src/server/routes.ts:137-152`
 - **Category:** security

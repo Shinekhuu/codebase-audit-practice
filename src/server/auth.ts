@@ -73,8 +73,7 @@ export async function register(req: Request, res: Response): Promise<void> {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      error: error.message,
-      stack: error.stack,
+      error: "Registration failed",
     });
   }
 }
